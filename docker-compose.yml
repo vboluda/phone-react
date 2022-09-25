@@ -1,0 +1,30 @@
+version: "3.4"
+x-aws-vpc: "vpc-0ae4f1334bc42806e"
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: a_test
+      MONGO_INITDB_ROOT_PASSWORD: a_test01
+      MONGO_INITDB_DATABASE: test
+    volumes:
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+  phone-server:
+    build: phone-server/
+    ports:
+    - "4000:4000"
+    depends_on:
+    - mongo
+    image: test/phone-server:latest
+    env_file:
+    - ./phone-server/.env
+  phone-react:
+    build: react/
+    image: test/phone-react:latest
+    depends_on:
+    - phone-server
+    ports:
+      - "3000:3000"
