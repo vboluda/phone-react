@@ -9,6 +9,7 @@ Client server app based on React, Apollo and MongoDB
 - The efficiency of the REACT app has not been analysed.
 - The web application layout has not been prioritised. 
 - Responsive design has not been tested
+- Code has not been properly commented
 
 ## Technical stack
 - Docker and Docker-compose
